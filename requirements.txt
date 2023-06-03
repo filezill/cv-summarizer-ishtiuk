@@ -1,0 +1,5 @@
+flask
+PyMuPDF
+spacy
+spacy-transformers
+gunicorn
