@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Resume Summarizer</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Raleway:wght@400;500;600&display=swap');
+        body {
+            background-color: #22ff0005;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #container {
+            width: 660px;
+            margin: 0 auto;
+            margin-top: 3%;
+            padding: 20px;
+            background-color: #f0f0f0;
+            color: #000;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgb(50 205 50 / 50%);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #32CD32; /* Lime color */
+            font-size: 28px;
+            text-transform: uppercase;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        #upload-label {
+            display: block;
+            width: 80%;
+            margin: 0 auto;
+            margin-bottom: 2.1%;
+            padding: 20px;
+            text-align: center;
+            background-color: white; /* Lime color */
+            color: #000;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            border: 2.2px solid #32CD32;
+        }
+
+        #upload-button {
+            display: block;
+            width: 87%;
+            margin: 0 auto;
+            margin-bottom: 2.1%;
+            padding: 20px;
+            text-align: center;
+            background-color: #32CD32; /* Lime color */
+            color: #000;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            border: 2.2px solid #32CD32;
+        }
+
+        #upload-label:hover {
+            color: whitesmoke;
+            border-color: transparent;
+            background-color: #228B22; /* A darker shade of lime color */
+        }
+
+        #upload-button:hover {
+            color: whitesmoke;
+            border-color: transparent;
+            background-color: #228B22; /* A darker shade of lime color */
+        }
+
+        #output {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+
+        .summary-item {
+            margin-bottom: 10px;
+        }
+
+        .summary-item strong {
+            color: #32CD32; /* Lime color */
+        }
+
+        /* CSS for the loading animation */
+        #loader {
+            display: none;
+            border: 16px solid #cfcfcf8c;
+            border-top: 16px solid #32CD32; /* Lime color */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto;
+        }
+
+        /* CSS animation */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+    <body>
+        <div id="container">
+            <h1>AI Resume Summarizer</h1>
+
+            <form id="upload-form" action="/process_resume" method="POST" enctype="multipart/form-data">
+                <label for="resume-upload" id="upload-label">Upload your resume (PDF)</label>
+                <input type="file" id="resume-upload" accept="application/pdf" name="resume">
+                <input type="submit" id="upload-button" value="Extract Information">
+                <div id="loader"></div> <!-- The loader -->
+
+            </form>
+
+            <div id="output">
+                {% if show_summary %}
+                    <!-- Display the summary section -->
+                {% for item in data %}
+                <div class="summary-item"><strong>{{ item[0] }}:</strong>    {{ item[1] }}</div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+        <script>
+            var loader = document.getElementById("loader");
+            var output = document.getElementById("output");
+    
+            // Function to clear previous outputs
+            function clearOutputs() {
+                output.innerHTML = "";
+            }
+    
+            // Event listener for the label
+            document.getElementById("upload-label").addEventListener("click", clearOutputs);
+    
+            // Event listener for the form submission
+            document.getElementById("upload-form").addEventListener("submit", function() {
+                loader.style.display = "block";
+                setTimeout(function() {
+                    loader.style.display = "none";
+                }, 2000); // Display the loader for 2 seconds (2000 milliseconds)
+            });
+        </script>
+    </body>
+</html>
