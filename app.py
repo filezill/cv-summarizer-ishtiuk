@@ -41,4 +41,4 @@ def process_resume():
       return render_template('index.html', data=[("ERROR", "A courrputed file was uploaded!")], show_summary=True)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
